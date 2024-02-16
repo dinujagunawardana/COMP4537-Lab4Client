@@ -1,0 +1,146 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #3498db, #9b59b6);
+    color: #ecf0f1;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+h1 {
+    font-size: 3em;
+    text-align: center;
+    color: #ecf0f1;
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    animation: fadeInUp 1s ease;
+}
+
+#searchForm {
+    width: 100%;
+    max-width: 600px;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+    border-radius: 15px;
+    text-align: center;
+    margin: 30px auto;
+    animation: slideInDown 1s ease;
+}
+
+label {
+    display: block;
+    margin-bottom: 15px;
+    color: #2c3e50; /* Darker label color for better contrast */
+    font-weight: bold;
+    animation: fadeIn 1s ease;
+}
+
+input {
+    width: calc(100% - 20px);
+    padding: 15px;
+    margin-bottom: 25px;
+    border: 1px solid #34495e; /* Darker border color for better contrast */
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 16px;
+    transition: border-color 0.3s ease, background 0.3s ease;
+    animation: fadeIn 1s ease;
+}
+
+input:focus {
+    border-color: #3498db;
+    background: rgba(52, 152, 219, 0.1);
+}
+
+button {
+    background: #e74c3c;
+    color: #ecf0f1;
+    padding: 18px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    display: inline-block;
+    font-size: 18px;
+    transition: background 0.3s ease, transform 0.3s ease;
+    animation: fadeIn 1s ease;
+}
+
+button:hover {
+    background: #c0392b;
+    transform: scale(1.05);
+}
+
+#searchFeedback {
+    color: #e74c3c;
+    margin-top: 20px;
+    background: rgba(236, 240, 241, 0.9); /* Light background for better visibility */
+    padding: 15px; /* Increased padding for better spacing */
+    border-radius: 8px;
+    animation: fadeIn 1s ease;
+}
+
+#searchResult {
+    margin-top: 50px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+    border-radius: 15px;
+    text-align: left;
+    color: #2c3e50;
+    animation: fadeIn 1s ease;
+}
+
+/* Additional Styling for a Sleek Transition Effect */
+body.dark-mode {
+    background: linear-gradient(135deg, #2c3e50, #8e44ad);
+}
+
+body.dark-mode #searchForm,
+body.dark-mode #searchResult {
+    background: rgba(52, 73, 94, 0.9);
+    color: #ecf0f1;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode button {
+    background: #e74c3c;
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInDown {
+    from {
+        transform: translateY(-100%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
