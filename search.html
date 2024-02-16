@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictionary Search</title>
+</head>
+<body>
+    <h1>Search in Dictionary</h1>
+    <form id="searchForm">
+        <label for="searchWordInput">Search Word:</label>
+        <input type="text" id="searchWordInput" required pattern="[a-zA-Z]+" title="Only letters are allowed">
+        <br>
+        <button type="button" onclick="searchDefinition()">Search</button>
+    </form>
+    <div id="searchFeedback"></div>
+    <div id="searchResult"></div>
+
+    <script>
+        function searchDefinition() {
+            const searchWord = document.getElementById('searchWordInput').value;
+
+            // Simple input validation
+            if (!searchWord) {
+                document.getElementById('searchFeedback').innerHTML = 'Please enter a word to search.';
+                return;
+            }
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', `http://localhost:8080/api/definitions/?word=${searchWord}`, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
+                        document.getElementById('searchFeedback').innerHTML = `Success! Found definition for ${searchWord}.`;
+                        document.getElementById('searchResult').innerHTML = `Definition: ${response.definition}`;
+                    } else {
+                        document.getElementById('searchFeedback').innerHTML = 'Error searching for the definition. Please try again.';
+                        document.getElementById('searchResult').innerHTML = '';
+                    }
+                }
+            };
+
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
