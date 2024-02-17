@@ -8,51 +8,66 @@
     <title>Dictionary Store</title>
 </head>
 <body>
-    <h1>Store in Dictionary </h1>
+
+    <h1>Store in Dictionary</h1>
+
+    <!-- Form for user input with input fields for the word and definition, and a button to submit the form -->
     <form id="storeForm">
+        <!-- Label and input field for the word with required attribute and a pattern for only allowing letters -->
         <label for="wordInput">Word:</label>
         <input type="text" id="wordInput" required pattern="[a-zA-Z]+" title="Only letters are allowed">
         <br>
+        <!-- Label and textarea for the definition with required attribute -->
         <label for="definitionInput">Definition:</label>
         <textarea id="definitionInput" required></textarea>
         <br>
+        <!-- Button that triggers the addDefinition() function when clicked -->
         <button type="button" onclick="addDefinition()">Submit</button>
     </form>
+
+    <!-- Div to display feedback messages to the user -->
     <div id="feedback"></div>
 
+    <!-- JavaScript script for handling the addition of definitions -->
     <script>
-       function addDefinition() {
-    const word = document.getElementById('wordInput').value;
-    const definition = document.getElementById('definitionInput').value;
+        function addDefinition() {
+            // Get the values entered by the user for word and definition
+            const word = document.getElementById('wordInput').value;
+            const definition = document.getElementById('definitionInput').value;
 
-    // Simple input validation
-    if (!word || !definition) {
-        document.getElementById('feedback').innerHTML = 'Please fill out both word and definition.';
-        return;
-    }
-
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', 'https://dinujag.com/COMP4537/labs/4/api/definitions/', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 201) {
-                const response = JSON.parse(xhr.responseText);
-                document.getElementById('feedback').innerHTML = `Success! ${response.message}. Request# ${response.requestNumber}, Total Entries: ${response.totalEntries}`;
-            } else if (xhr.status === 409) {
-                const response = JSON.parse(xhr.responseText);
-                document.getElementById('feedback').innerHTML = `Warning! ${response.message}`;
-            } else {
-                document.getElementById('feedback').innerHTML = 'Error adding definition. Please check your input.';
+            // Simple input validation - check if both word and definition are filled
+            if (!word || !definition) {
+                document.getElementById('feedback').innerHTML = 'Please fill out both word and definition.';
+                return;
             }
+
+            // Create a new XMLHttpRequest object for making an asynchronous POST request
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'https://lab4server-3ln5.onrender.com/api/definitions/', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+
+            // Define a callback function to handle the response when the request is complete
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 201) {
+                        // Parse the JSON response and update the feedback div with success message
+                        const response = JSON.parse(xhr.responseText);
+                        document.getElementById('feedback').innerHTML = `Success! ${response.message}. Request# ${response.requestNumber}, Total Entries: ${response.totalEntries}`;
+                    } else if (xhr.status === 409) {
+                        // Parse the JSON response and update the feedback div with warning message
+                        const response = JSON.parse(xhr.responseText);
+                        document.getElementById('feedback').innerHTML = `Warning! ${response.message}`;
+                    } else {
+                        // Display an error message if the request was not successful
+                        document.getElementById('feedback').innerHTML = 'Error adding definition. Please check your input.';
+                    }
+                }
+            };
+
+            // Convert the data to JSON format and send the XMLHttpRequest
+            const data = JSON.stringify({ word, definition });
+            xhr.send(data);
         }
-    };
-
-    const data = JSON.stringify({ word, definition });
-    xhr.send(data);
-}
-
     </script>
 </body>
 </html>
